@@ -53,7 +53,7 @@ router.get('/callback', function(req, res, next) {
 
 // function for getting environment variables to the frontend
 router.get('/getEnv', function(req, res, next) {
-  if (_clientId == undefined || _clientId == null)
+  if (_clientId === undefined || _clientId == null)
     res.jsonp({
       status: "ERROR",
       msg: "client_id not found"
@@ -98,7 +98,7 @@ router.post('/getPersonData', function(req, res, next) {
         console.log(JSON.stringify(data.body));
 
         var accessToken = data.body.access_token;
-        if (accessToken == undefined || accessToken == null) {
+        if (accessToken === undefined || accessToken == null) {
           res.jsonp({
             status: "ERROR",
             msg: "ACCESS TOKEN NOT FOUND"
@@ -117,7 +117,7 @@ function callPersonAPI(accessToken, res) {
 
   // validate and decode token to get UINFIN
   var decoded = securityHelper.verifyJWS(accessToken, _publicCertContent);
-  if (decoded == undefined || decoded == null) {
+  if (decoded === undefined || decoded == null) {
     res.jsonp({
       status: "ERROR",
       msg: "INVALID TOKEN"
@@ -128,7 +128,7 @@ function callPersonAPI(accessToken, res) {
   console.log(JSON.stringify(decoded));
 
   var uinfin = decoded.sub;
-  if (uinfin == undefined || uinfin == null) {
+  if (uinfin === undefined || uinfin == null) {
     res.jsonp({
       status: "ERROR",
       msg: "UINFIN NOT FOUND"
@@ -156,20 +156,20 @@ function callPersonAPI(accessToken, res) {
           text: callRes.text
         };
         var personData = data.text;
-        if (personData == undefined || personData == null) {
+        if (personData === undefined || personData == null) {
           res.jsonp({
             status: "ERROR",
             msg: "PERSON DATA NOT FOUND"
           });
         } else {
 
-          if (_authLevel == "L0") {
+          if (_authLevel === "L0") {
             console.log("Person Data (JWS):".green);
             console.log(personData);
             personData = JSON.parse(personData);
             // personData = securityHelper.verifyJWS(personData, _publicCertContent);
 
-            if (personData == undefined || personData == null) {
+            if (personData === undefined || personData == null) {
               res.jsonp({
                 status: "ERROR",
                 msg: "INVALID DATA OR SIGNATURE FOR PERSON DATA"
@@ -186,14 +186,14 @@ function callPersonAPI(accessToken, res) {
             });
 
           }
-          else if (_authLevel == "L2") {
+          else if (_authLevel === "L2") {
             console.log("Person Data (JWE):".green);
             console.log(personData);
 
             var jweParts = personData.split("."); // header.encryptedKey.iv.ciphertext.tag
             securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent)
               .then(personData => {
-                if (personData == undefined || personData == null) {
+                if (personData === undefined || personData == null) {
                   res.jsonp({
                     status: "ERROR",
                     msg: "INVALID DATA OR SIGNATURE FOR PERSON DATA"
@@ -244,9 +244,9 @@ function createTokenRequest(code) {
 
   // Add Authorisation headers for connecting to API Gateway
   var authHeaders = null;
-  if (_authLevel == "L0") {
+  if (_authLevel === "L0") {
     // No headers
-  } else if (_authLevel == "L2") {
+  } else if (_authLevel === "L2") {
     authHeaders = securityHelper.generateAuthorizationHeader(
       _tokenApiUrl,
       params,
@@ -278,6 +278,8 @@ function createTokenRequest(code) {
   // Set Params
   if (!_.isUndefined(params) && !_.isEmpty(params))
     request.send(params);
+
+  console.info(request);
 
   return request;
 }
@@ -329,6 +331,8 @@ function createPersonRequest(uinfin, validToken) {
   // Set Params
   if (!_.isUndefined(params) && !_.isEmpty(params))
     request.query(params);
+
+  console.info(request);
 
   return request;
 }
