@@ -164,7 +164,7 @@ function callPersonAPI(accessToken, res) {
         } else {
 
           if (_authLevel == "L0") {
-            console.log("Person Data (JWS):".green);
+            console.log("Person Data:".green);
             console.log(personData);
             personData = JSON.parse(personData);
             // personData = securityHelper.verifyJWS(personData, _publicCertContent);
