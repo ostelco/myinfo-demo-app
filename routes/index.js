@@ -19,6 +19,9 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // Setup Configuration
 // ####################
 
+
+// LOADED FRON ENV VARIABLE: public key from MyInfo given to you during onboarding for RSA digital signature
+var _myinfoPublicCertContent = process.env.MYINFO_VERIFY_JWS_SIGNATURE_CERT_PUBLIC_CERT;
 // LOADED FRON ENV VARIABLE: public key from MyInfo Consent Platform given to you during onboarding for RSA digital signature
 var _publicCertContent = process.env.MYINFO_CONSENTPLATFORM_SIGNATURE_CERT_PUBLIC_CERT;
 // LOADED FRON ENV VARIABLE: your private key for RSA digital signature
@@ -186,7 +189,7 @@ function callPersonAPI(accessToken, res) {
             });
 
           }
-          else if (_authLevel == "L2") {
+          else if (_authLevel == "L2"){
             console.log("Person Data (JWE):".green);
             console.log(personData);
 
@@ -203,6 +206,44 @@ function callPersonAPI(accessToken, res) {
 
                 console.log("Person Data (Decoded):".green);
                 console.log(JSON.stringify(personData));
+                // successful. return data back to frontend
+                res.jsonp({
+                  status: "OK",
+                  text: personData
+                });
+
+              })
+              .catch(error => {
+                console.error("Error with decrypting JWE: %s".red, error);
+              })
+          }
+          else if(_authLevel == "L2v3"){
+            console.log("Person Data (JWE):".green);
+            console.log(personData);
+
+            var jweParts = personData.split("."); // header.encryptedKey.iv.ciphertext.tag
+            securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent)
+              .then(personDataJWS => {
+                if (personDataJWS == undefined || personDataJWS == null) {
+                  res.jsonp({
+                    status: "ERROR",
+                    msg: "INVALID DATA OR SIGNATURE FOR PERSON DATA"
+                  });
+                }
+                console.log("Person Data (JWS):".green);
+                console.log(JSON.stringify(personDataJWS));
+
+                var decodedPersonData = securityHelper.verifyJWS(personDataJWS, _myinfoPublicCertContent);
+                if (decodedPersonData == undefined || decodedPersonData == null) {
+                  res.jsonp({
+                    status: "ERROR",
+                    msg: "INVALID DATA OR SIGNATURE FOR PERSON DATA"
+                  })
+                }
+                decodedPersonData.uinfin = uinfin; // add the uinfin into the data to display on screen
+
+                console.log("Person Data (Decoded):".green);
+                console.log(JSON.stringify(decodedPersonData));
                 // successful. return data back to frontend
                 res.jsonp({
                   status: "OK",
@@ -246,7 +287,7 @@ function createTokenRequest(code) {
   var authHeaders = null;
   if (_authLevel == "L0") {
     // No headers
-  } else if (_authLevel == "L2") {
+  } else if (_authLevel == "L2" || _authLevel == "L2v3" ) {
     authHeaders = securityHelper.generateAuthorizationHeader(
       _tokenApiUrl,
       params,
@@ -291,6 +332,7 @@ function createPersonRequest(uinfin, validToken) {
   // assemble params for Person API
   var strParams = "client_id=" + _clientId +
     "&attributes=" + _attributes;
+
   var params = querystring.parse(strParams);
 
   // assemble headers for Person API
