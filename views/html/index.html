@@ -134,7 +134,7 @@
                     "housingtype": str(data.housingtype)==undefined ? str(data.hdbtype) : str(data.housingtype),
                     "marital": str(data.marital),
                     "edulevel": str(data.edulevel),
-                    "assessableincome": str(data.assessableincome),
+                    "assessableincome": str(data.assessableincome).replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                 };
 
             // Populate values
