@@ -1,3 +1,13 @@
+# MyInfo Demo App
+
+This is a demo application meant to illustrate how to integrate your application with [MyInfo APIs](https://www.ndi-api.gov.sg)
+
+## Changelog
+
+**20 Mar 2019:**
+  - updated demo application for MyInfo v3 APIs which are to be released in April 2019
+
+
 ## MyInfo Demo App Setup
 
 ### 1.1 Install Node and NPM
@@ -64,7 +74,7 @@ Please note the different configurations accordingly.
 </span>
 
 
-### v2.2 APIs (LATEST)
+### v3 APIs (LATEST)
 
 **For Linux/MacOS**
 
@@ -72,18 +82,18 @@ Edit the ``start.sh``. Look for ``SANDBOX ENVIRONMENT``, Comment out these confi
 ```
 # SANDBOX ENVIRONMENT (no PKI digital signature)
 # export AUTH_LEVEL=L0
-# export MYINFO_API_AUTHORISE='https://sandbox.api.myinfo.gov.sg/com/v2/authorise'
-# export MYINFO_API_TOKEN='https://sandbox.api.myinfo.gov.sg/com/v2/token'
-# export MYINFO_API_PERSON='https://sandbox.api.myinfo.gov.sg/com/v2/person'
+# export MYINFO_API_AUTHORISE='https://sandbox.api.myinfo.gov.sg/com/v3/authorise'
+# export MYINFO_API_TOKEN='https://sandbox.api.myinfo.gov.sg/com/v3/token'
+# export MYINFO_API_PERSON='https://sandbox.api.myinfo.gov.sg/com/v3/person'
 ```
 
 Look for ``TEST ENVIRONMENT``, uncomment these configurations,
 ```
 # TEST ENVIRONMENT (with PKI digital signature)
 export AUTH_LEVEL=L2
-export MYINFO_API_AUTHORISE='https://test.api.myinfo.gov.sg/com/v2/authorise'
-export MYINFO_API_TOKEN='https://test.api.myinfo.gov.sg/com/v2/token'
-export MYINFO_API_PERSON='https://test.api.myinfo.gov.sg/com/v2/person'
+export MYINFO_API_AUTHORISE='https://test.api.myinfo.gov.sg/com/v3/authorise'
+export MYINFO_API_TOKEN='https://test.api.myinfo.gov.sg/com/v3/token'
+export MYINFO_API_PERSON='https://test.api.myinfo.gov.sg/com/v3/person'
 ```
 Execute the following command to start the application:
 ```
@@ -96,65 +106,17 @@ Edit the ``start.bat``. Look for ``SANDBOX ENVIRONMENT``, comment out these conf
 ```
 rem SANDBOX ENVIRONMENT (no PKI digital signature)
 rem set AUTH_LEVEL=L0
-rem set MYINFO_API_AUTHORISE=https://sandbox.api.myinfo.gov.sg/com/v2/authorise
-rem set MYINFO_API_TOKEN=https://sandbox.api.myinfo.gov.sg/com/v2/token
-rem set MYINFO_API_PERSON=https://sandbox.api.myinfo.gov.sg/com/v2/person
+rem set MYINFO_API_AUTHORISE=https://sandbox.api.myinfo.gov.sg/com/v3/authorise
+rem set MYINFO_API_TOKEN=https://sandbox.api.myinfo.gov.sg/com/v3/token
+rem set MYINFO_API_PERSON=https://sandbox.api.myinfo.gov.sg/com/v3/person
 ```
 Look for ``TEST ENVIRONMENT``, uncomment these configurations,
 ```
 rem TEST ENVIRONMENT (with PKI digital signature)
 set AUTH_LEVEL=L2
-set MYINFO_API_AUTHORISE=https://test.api.myinfo.gov.sg/com/v2/authorise
-set MYINFO_API_TOKEN=https://test.api.myinfo.gov.sg/com/v2/token
-set MYINFO_API_PERSON=https://test.api.myinfo.gov.sg/com/v2/person
-```
-Execute the following command to start the application:
-```
-  .\start.bat
-```
-
-### v2.1 APIs - DEPRECATED
-
-**For Linux/MacOS**
-
-Edit the ``start.sh``. Look for ``L0 APIs``, Comment out these configurations,
-```
-# L0 APIs
-# export AUTH_LEVEL=L0
-# export MYINFO_API_AUTHORISE='https://myinfosgstg.api.gov.sg/dev/v2/authorise'
-# export MYINFO_API_TOKEN='https://myinfosgstg.api.gov.sg/dev/v2/token'
-# export MYINFO_API_PERSON='https://myinfosgstg.api.gov.sg/dev/v2/person'
-```
-Look for ``L2 APIs``, uncomment these configurations,
-```
-# L2 APIs
-export AUTH_LEVEL=L2
-export MYINFO_API_AUTHORISE='https://myinfosgstg.api.gov.sg/test/v2/authorise'
-export MYINFO_API_TOKEN='https://myinfosgstg.api.gov.sg/test/v2/token'
-export MYINFO_API_PERSON='https://myinfosgstg.api.gov.sg/test/v2/person'
-```
-Execute the following command to start the application:
-```
-  ./start.sh
-```
-
-**For Windows**
-
-Edit the ``start.bat``. Look for ``L0 APIs``, comment out these configurations,
-```
-rem L0 APIs
-rem set AUTH_LEVEL=L0
-rem set MYINFO_API_AUTHORISE='https://myinfosgstg.api.gov.sg/dev/v2/authorise'
-rem set MYINFO_API_TOKEN='https://myinfosgstg.api.gov.sg/dev/v2/token'
-rem set MYINFO_API_PERSON='https://myinfosgstg.api.gov.sg/dev/v2/person'
-```
-Look for ``L2 APIs``, uncomment these configurations,
-```
-rem L2 APIs
-set AUTH_LEVEL=L2
-set MYINFO_API_AUTHORISE='https://myinfosgstg.api.gov.sg/test/v2/authorise'
-set MYINFO_API_TOKEN='https://myinfosgstg.api.gov.sg/test/v2/token'
-set MYINFO_API_PERSON='https://myinfosgstg.api.gov.sg/test/v2/person'
+set MYINFO_API_AUTHORISE=https://test.api.myinfo.gov.sg/com/v3/authorise
+set MYINFO_API_TOKEN=https://test.api.myinfo.gov.sg/com/v3/token
+set MYINFO_API_PERSON=https://test.api.myinfo.gov.sg/com/v3/person
 ```
 Execute the following command to start the application:
 ```
