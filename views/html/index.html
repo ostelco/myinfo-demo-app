@@ -99,6 +99,7 @@
                 	// successful response from serverside
 					if (data.status == "OK") { // successful
 						// fill up the application form
+						console.log("data",data);
 						prefillForm(data.text);
 					} else {
 						// error occured
@@ -118,17 +119,17 @@
 			// prefill form data
             var formValues = {
                     "uinfin":data.uinfin,
-                    "name":data.name.value,
-                    "sex":data.sex.value,
-                    "race":data.race.value,
-                    "nationality":data.nationality.value,
-                    "dob":data.dob.value,
-                    "email":data.email.value,
+                    "name":data.name.value ? data.name.value : data.name.desc,
+                    "sex":data.sex.value ? data.sex.value : data.sex.desc,
+                    "race":data.race.value ? data.race.value : data.race.desc,
+                    "nationality":data.nationality.value ? data.nationality.value : data.nationality.desc,
+                    "dob":data.dob.value ? data.dob.value : data.dob.desc,
+                    "email":data.email.value ? data.email.value : data.email.desc,
                     "mobileno":toStr(data.mobileno,'PHONENUMLOCAL'),
                     "regadd":toStr(data.regadd,'ADDRESSLOCAL'),
                     "housingtype":toStr(data,'HOUSINGTYPE'),
-                    "marital":data.marital.value,
-                    "edulevel":data.edulevel.value,
+                    "marital":data.marital.value ? data.marital.value : data.marital.desc,
+                    "edulevel":data.edulevel.value ? data.edulevel.value : data.edulevel.desc,
                     "assessableincome":toStr(data.assessableincome, 'MONEY'),
                 };
 

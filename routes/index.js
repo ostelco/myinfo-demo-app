@@ -219,7 +219,7 @@ function callPersonAPI(accessToken, res) {
                 // successful. return data back to frontend
                 res.jsonp({
                   status: "OK",
-                  text: personData
+                  text: decodedPersonData
                 });
 
               })
