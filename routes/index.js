@@ -48,7 +48,13 @@ router.get('/', function(req, res, next) {
 
 // callback function - directs back to home page
 router.get('/callback', function(req, res, next) {
-  res.sendFile(path.join(__dirname + '/../views/html/index.html'));
+  console.log("Original URL = ", req.originalUrl)
+  var qParams = req.originalUrl.substring(req.originalUrl.indexOf("?"))
+  console.log("Parameters = ", qParams)
+  console.log("Redirecting...")
+  res.redirect(302, 'https://dl-dev.oya.world/links/myinfo'+qParams);
+  //res.redirect(302, 'https://dl-dev.oya.world/links/myinfo');
+  //res.sendFile(path.join(__dirname + '/../views/html/index.html'));
 });
 
 // function for getting environment variables to the frontend
