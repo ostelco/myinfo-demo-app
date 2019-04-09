@@ -87,6 +87,9 @@
 			var authCode = $.url(this.location.href).param('code');
 			//alert ("authorisation code="+authCode);
 
+			console.info("authorisation code = " + authCode);
+			return;
+
 			// invoke AJAX call from frontend clientside to your backend serverside
             $.ajax({
 	            url: "/getPersonData",
